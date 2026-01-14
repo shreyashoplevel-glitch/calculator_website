@@ -5,18 +5,38 @@ let operator = "";
 let secondNumber = "";
 
 function displaytoscreen(input) {
-    if ("+-*/".includes(input)) {
+
+    // Unary operators
+    if (input === "√") {
+        if (firstNumber === "") return;
+        firstNumber = Math.sqrt(parseFloat(firstNumber)).toString();
+        display.value = firstNumber;
+        return;
+    }
+
+    if (input === "x²") {
+        if (firstNumber === "") return;
+        firstNumber = (parseFloat(firstNumber) ** 2).toString();
+        display.value = firstNumber;
+        return;
+    }
+
+    // Binary operators
+    if ("+-*/%".includes(input)) {
         if (firstNumber === "") return;
         operator = input;
         display.value += input;
-    } else {
-        if (operator === "") {
-            firstNumber += input;
-        } else {
-            secondNumber += input;
-        }
-        display.value += input;
+        return;
     }
+
+    // Numbers & decimal
+    if (operator === "") {
+        firstNumber += input;
+    } else {
+        secondNumber += input;
+    }
+
+    display.value += input;
 }
 
 function clearDisplay() {
@@ -37,15 +57,9 @@ function calculate() {
     }
 
     switch (operator) {
-        case "+":s
-            result = num1 + num2;
-            break;
-        case "-":
-            result = num1 - num2;
-            break;
-        case "*":
-            result = num1 * num2;
-            break;
+        case "+": result = num1 + num2; break;
+        case "-": result = num1 - num2; break;
+        case "*": result = num1 * num2; break;
         case "/":
             if (num2 === 0) {
                 display.value = "Error";
@@ -53,29 +67,24 @@ function calculate() {
             }
             result = num1 / num2;
             break;
-        default:
-            return;
+        case "%": result = num1 % num2; break;
+        default: return;
     }
 
     display.value = result;
-
-    // Allow chaining calculations
     firstNumber = result.toString();
     operator = "";
     secondNumber = "";
 }
-function delete_backspace(){
-    if(secondNumber == ''){
-        display.value = firstNumber;
-        if(firstNumber != '' && operator == ''){
-            display.value = "";
-        }
+
+function delete_backspace() {
+    if (secondNumber !== "") {
+        secondNumber = secondNumber.slice(0, -1);
+    } else if (operator !== "") {
+        operator = "";
+    } else {
+        firstNumber = firstNumber.slice(0, -1);
     }
-    if(secondNumber != ''){
-        display.value = firstNumber + operator;
-    }
-    
-    
+
+    display.value = firstNumber + operator + secondNumber;
 }
-
-
