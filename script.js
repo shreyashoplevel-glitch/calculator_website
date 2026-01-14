@@ -37,7 +37,7 @@ function calculate() {
     }
 
     switch (operator) {
-        case "+":
+        case "+":s
             result = num1 + num2;
             break;
         case "-":
@@ -63,4 +63,17 @@ function calculate() {
     firstNumber = result.toString();
     operator = "";
     secondNumber = "";
+}
+function delete_backspace(){
+    if(secondNumber == ''){
+        display.value = firstNumber;
+        if(firstNumber != ''){
+            display.value = "";
+        }
+    }
+    if(secondNumber != ''){
+        display.value = firstNumber + operator;
+    }
+    
+    
 }
